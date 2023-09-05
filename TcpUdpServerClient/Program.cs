@@ -6,7 +6,7 @@ using System.Text;
 
 class Program
 {
-    static TcpListener tcpListener = new TcpListener("00.00.000.000", 3389);
+    static TcpListener tcpListener = new TcpListener("20.119.16.38", 3389);
     static UdpClient udpListener = new UdpClient(3389);
 
     static bool tcpServer = false;
@@ -65,7 +65,7 @@ class Program
 
                 case "3":
                     TcpClient tcpClient = new TcpClient();
-                    tcpClient.Connect("23.97.211.131", 3389);
+                    tcpClient.Connect("20.119.16.38", 3389);
                     NetworkStream stream = tcpClient.GetStream();
                     string startServerMessage = "From TCP Client";
                     byte[] data = Encoding.ASCII.GetBytes(startServerMessage);
@@ -78,7 +78,7 @@ class Program
 
                 case "4":
                     UdpClient udpClient = new UdpClient();
-                    IPEndPoint serverEndPoint = new IPEndPoint("23.97.211.131", 3389);
+                    IPEndPoint serverEndPoint = new IPEndPoint("20.119.16.38", 3389);
                     string message = "from UDP CLient ";
                     byte[] data1 = Encoding.ASCII.GetBytes(message);
                     udpClient.Send(data1, data1.Length, serverEndPoint);
@@ -134,7 +134,7 @@ class Program
             Console.WriteLine("UDP Server started. Waiting for connections...");
             while (true)
             {
-                IPEndPoint clientEndPoint = new IPEndPoint("23.97.211.131", 3389);
+                IPEndPoint clientEndPoint = new IPEndPoint("20.119.16.38", 3389);
                 byte[] buffer = udpListener.Receive(ref clientEndPoint);
                 string messageEncode = Encoding.ASCII.GetString(buffer);
                 Console.WriteLine("UDP Message received: " + messageEncode);
