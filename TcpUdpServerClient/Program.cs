@@ -6,7 +6,7 @@ using System.Text;
 
 class Program
 {
-    static TcpListener tcpListener = new TcpListener("20.119.16.38", 3389);
+    static TcpListener tcpListener = new TcpListener(IPAddress.Parse("20.119.16.38"), 3389);
     static UdpClient udpListener = new UdpClient(3389);
 
     static bool tcpServer = false;
@@ -104,7 +104,7 @@ class Program
             while (true)
             {
                 TcpClient client = tcpListener.AcceptTcpClient();
-                Console.WriteLine("TCP Client connected.");
+                Log.Information("TCP Client connected.");
                 NetworkStream stream = client.GetStream();
                 byte[] buffer = new byte[1024];
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
@@ -134,7 +134,7 @@ class Program
             Console.WriteLine("UDP Server started. Waiting for connections...");
             while (true)
             {
-                IPEndPoint clientEndPoint = new IPEndPoint("20.119.16.38", 3389);
+                IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse("20.119.16.38"), 3389);
                 byte[] buffer = udpListener.Receive(ref clientEndPoint);
                 string messageEncode = Encoding.ASCII.GetString(buffer);
                 Console.WriteLine("UDP Message received: " + messageEncode);
