@@ -6,11 +6,11 @@ using System.Text;
 
 class Program
 {
-    static TcpListener tcpListener = new TcpListener(IPAddress.Parse("20.119.16.38"), 3389);
-    static UdpClient udpListener = new UdpClient(3389);
+    static TcpListener tcpListener = new TcpListener(IPAddress.Parse("20.119.8.43"), 3389);
+    static UdpClient udpListener = new UdpClient(7024);
 
-    static bool tcpServer = false;
-    static bool udpServer = false;
+    static bool tcpServer = true;
+    static bool udpServer = true;
 
     static string tcpServerStopStart = "OFF";
     static string udpServerStopStart = "OFF";
@@ -65,7 +65,7 @@ class Program
 
                 case "3":
                     TcpClient tcpClient = new TcpClient();
-                    tcpClient.Connect("20.119.16.38", 3389);
+                    tcpClient.Connect("20.119.8.43", 3389);
                     NetworkStream stream = tcpClient.GetStream();
                     string startServerMessage = "From TCP Client";
                     byte[] data = Encoding.ASCII.GetBytes(startServerMessage);
@@ -78,7 +78,7 @@ class Program
 
                 case "4":
                     UdpClient udpClient = new UdpClient();
-                    IPEndPoint serverEndPoint = new IPEndPoint("20.119.16.38", 3389);
+                    IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("20.119.8.43"), 7024);
                     string message = "from UDP CLient ";
                     byte[] data1 = Encoding.ASCII.GetBytes(message);
                     udpClient.Send(data1, data1.Length, serverEndPoint);
@@ -104,7 +104,7 @@ class Program
             while (true)
             {
                 TcpClient client = tcpListener.AcceptTcpClient();
-                Log.Information("TCP Client connected.");
+                Console.WriteLine("TCP Client connected.");
                 NetworkStream stream = client.GetStream();
                 byte[] buffer = new byte[1024];
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
@@ -134,7 +134,7 @@ class Program
             Console.WriteLine("UDP Server started. Waiting for connections...");
             while (true)
             {
-                IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse("20.119.16.38"), 3389);
+                IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse("20.119.8.43"), 7024);
                 byte[] buffer = udpListener.Receive(ref clientEndPoint);
                 string messageEncode = Encoding.ASCII.GetString(buffer);
                 Console.WriteLine("UDP Message received: " + messageEncode);
