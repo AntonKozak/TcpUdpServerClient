@@ -65,7 +65,7 @@ class Program
 
                 case "3":
                     TcpClient tcpClient = new TcpClient();
-                    tcpClient.Connect(IPAddress.Parse("20.240.143.165"), 3389);
+                    tcpClient.Connect(IPAddress.Loopback, 3389);
                     NetworkStream stream = tcpClient.GetStream();
                     string startServerMessage = "From TCP Client";
                     byte[] data = Encoding.ASCII.GetBytes(startServerMessage);
@@ -78,7 +78,7 @@ class Program
 
                 case "4":
                     UdpClient udpClient = new UdpClient();
-                    IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("20.240.143.165"), 7024);
+                    IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Loopback, 7024);
                     string message = "from UDP CLient ";
                     byte[] data1 = Encoding.ASCII.GetBytes(message);
                     udpClient.Send(data1, data1.Length, serverEndPoint);
